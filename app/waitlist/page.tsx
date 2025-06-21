@@ -173,7 +173,7 @@ export default function Component() {
               </div>
             </StaggerItem>
 
-            <StaggerItem>
+            {/* <StaggerItem>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-xs text-blue-800 text-center">
                   <strong>Note:</strong> To activate this form, replace "YOUR_WAITLIST_FORM_ID" in the code with your
@@ -186,7 +186,7 @@ export default function Component() {
                   to get started.
                 </p>
               </div>
-            </StaggerItem>
+            </StaggerItem> */}
           </StaggerContainer>
         </main>
 

@@ -289,7 +289,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           "Submit Service Request"
         )}
       </Button>
-
+{/* 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <p className="text-xs text-blue-800 text-center">
           <strong>Note:</strong> To activate this form, replace "YOUR_FORM_ID" in the code with your actual Formspree
@@ -301,7 +301,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           </a>{" "}
           to get started.
         </p>
-      </div>
+      </div> */}
 
       <p className="text-xs text-gray-500 text-center">
         By submitting this form, you agree to our Terms of Service and Privacy Policy
