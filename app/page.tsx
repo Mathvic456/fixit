@@ -85,10 +85,15 @@ export default function HomePage() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
                 <Link href="/request-service" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white px-6 sm:px-8 py-3 text-base sm:text-lg min-w-[160px] transition-all duration-200 hover:scale-105">
                     Request Service
+                  </Button>
+                </Link>
+                <Link href="/waitlist" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-3 text-base sm:text-lg min-w-[160px] transition-all duration-200 hover:scale-105">
+                    Join Waitlist
                   </Button>
                 </Link>
                 <Button

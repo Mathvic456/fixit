@@ -19,19 +19,43 @@ export default function Component() {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
 
     setIsLoading(true)
+    setSubmitError(null)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      // Prepare form data for Formspree
+      const formData = new FormData()
+      formData.append("email", email)
+      formData.append("_subject", `New Waitlist Signup: ${email}`)
 
-    setIsLoading(false)
-    setShowSuccessModal(true)
-    setEmail("")
+      // Submit to Formspree (replace YOUR_WAITLIST_FORM_ID with your actual form ID)
+      const response = await fetch("https://formspree.io/f/mnnvbyvw", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+
+      if (response.ok) {
+        setShowSuccessModal(true)
+        setEmail("")
+      } else {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to join waitlist")
+      }
+    } catch (error) {
+      console.error("Waitlist submission error:", error)
+      setSubmitError(error instanceof Error ? error.message : "Failed to join waitlist. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -78,6 +102,12 @@ export default function Component() {
 
             <StaggerItem>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {submitError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="text-red-800 text-sm">{submitError}</p>
+                  </div>
+                )}
+
                 <Input
                   type="email"
                   placeholder="Enter Email Address"
@@ -140,6 +170,21 @@ export default function Component() {
                   </svg>
                 </div>
                 <span className="text-xs sm:text-sm text-gray-600">Continue with Google</span>
+              </div>
+            </StaggerItem>
+
+            <StaggerItem>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-xs text-blue-800 text-center">
+                  <strong>Note:</strong> To activate this form, replace "YOUR_WAITLIST_FORM_ID" in the code with your
+                  actual Formspree form ID.
+                  <br />
+                  Create a free account at{" "}
+                  <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" className="underline">
+                    formspree.io
+                  </a>{" "}
+                  to get started.
+                </p>
               </div>
             </StaggerItem>
           </StaggerContainer>

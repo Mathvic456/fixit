@@ -30,6 +30,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const serviceTypes = [
     "Plumbing",
@@ -57,15 +58,45 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(null)
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // Prepare form data for Formspree
+      const formspreeData = new FormData()
 
-      setIsSubmitted(true)
-      onSubmit?.(formData)
+      // Add all form fields
+      formspreeData.append("name", formData.name)
+      formspreeData.append("email", formData.email)
+      formspreeData.append("phone", formData.phone)
+      formspreeData.append("address", formData.address)
+      formspreeData.append("serviceType", formData.serviceType)
+      formspreeData.append("description", formData.description)
+      formspreeData.append("preferredDate", formData.preferredDate)
+      formspreeData.append("preferredTime", formData.preferredTime)
+      formspreeData.append("images", formData.images.join(", "))
+
+      // Add a subject line for better email organization
+      formspreeData.append("_subject", `New Service Request: ${formData.serviceType} - ${formData.name}`)
+
+      // Submit to Formspree
+      const response = await fetch("https://formspree.io/f/xjkredrz", {
+        method: "POST",
+        body: formspreeData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        onSubmit?.(formData)
+      } else {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to submit form")
+      }
     } catch (error) {
       console.error("Submission error:", error)
+      setSubmitError(error instanceof Error ? error.message : "Failed to submit request. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
@@ -87,6 +118,25 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
             arrival time.
           </p>
         </div>
+        <Button
+          onClick={() => {
+            setIsSubmitted(false)
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              address: "",
+              serviceType: "",
+              description: "",
+              preferredDate: "",
+              preferredTime: "",
+              images: [],
+            })
+          }}
+          className="bg-slate-800 hover:bg-slate-700 text-white"
+        >
+          Submit Another Request
+        </Button>
       </div>
     )
   }
@@ -98,10 +148,16 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         <p className="text-gray-600">Tell us what you need and we'll match you with the right technician</p>
       </div>
 
+      {submitError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-red-800 text-sm">{submitError}</p>
+        </div>
+      )}
+
       {/* Personal Information */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
           <Input
             type="text"
             value={formData.name}
@@ -111,7 +167,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
           <Input
             type="email"
             value={formData.email}
@@ -124,7 +180,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
           <Input
             type="tel"
             value={formData.phone}
@@ -134,7 +190,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Service Type *</label>
           <Select value={formData.serviceType} onValueChange={(value) => handleInputChange("serviceType", value)}>
             <SelectTrigger>
               <SelectValue placeholder="Select service type" />
@@ -154,7 +210,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           <MapPin className="w-4 h-4 inline mr-1" />
-          Service Address
+          Service Address *
         </label>
         <Input
           type="text"
@@ -170,7 +226,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             <Calendar className="w-4 h-4 inline mr-1" />
-            Preferred Date
+            Preferred Date *
           </label>
           <Input
             type="date"
@@ -183,7 +239,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             <Clock className="w-4 h-4 inline mr-1" />
-            Preferred Time
+            Preferred Time *
           </label>
           <Select value={formData.preferredTime} onValueChange={(value) => handleInputChange("preferredTime", value)}>
             <SelectTrigger>
@@ -201,7 +257,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
 
       {/* Description */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Problem Description</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Problem Description *</label>
         <Textarea
           value={formData.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
@@ -233,6 +289,19 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           "Submit Service Request"
         )}
       </Button>
+
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p className="text-xs text-blue-800 text-center">
+          <strong>Note:</strong> To activate this form, replace "YOUR_FORM_ID" in the code with your actual Formspree
+          form ID.
+          <br />
+          Create a free account at{" "}
+          <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" className="underline">
+            formspree.io
+          </a>{" "}
+          to get started.
+        </p>
+      </div>
 
       <p className="text-xs text-gray-500 text-center">
         By submitting this form, you agree to our Terms of Service and Privacy Policy
