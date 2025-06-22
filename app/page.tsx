@@ -47,7 +47,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <Logo />
+          <Logo size="xxl"/>
           <div className="flex gap-2">
             <Link href="/request-service">
               <Button className="bg-orange-500 text-white hover:bg-orange-600 text-sm sm:text-base px-4 sm:px-6">

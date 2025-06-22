@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Wrench, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import { AboutUsModal } from "./modals/about-us-modal"
 import { HowItWorksModal } from "./modals/how-it-works-modal"
 import { BecomeTechnicianModal } from "./modals/become-technician-modal"
@@ -12,6 +12,7 @@ import { BlogModal } from "./modals/blog-modal"
 import { PrivacyPolicyModal } from "./modals/privacy-policy-modal"
 import { TermsOfServiceModal } from "./modals/terms-of-service-modal"
 import { HelpCenterModal } from "./modals/help-center-modal"
+import { Logo } from "./logo"
 
 export function Footer() {
   const [activeModal, setActiveModal] = useState<string | null>(null)
@@ -31,12 +32,7 @@ export function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Company Info */}
             <div className="space-y-4 sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center justify-center w-8 h-8 bg-orange-500 rounded">
-                  <Wrench className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold">fixit</span>
-              </div>
+              <Logo linkToHome={false} size="xl" className="" />
               <p className="text-gray-300 text-sm leading-relaxed max-w-xs">
                 Africa's smartest technician-matching platform. Connecting you with verified professionals for all your
                 repair and maintenance needs.
@@ -150,7 +146,7 @@ export function Footer() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span>+234 7062 3919 97</span>
+                  <span>+234 6239 1997</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 flex-shrink-0" />

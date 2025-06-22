@@ -4,17 +4,29 @@ import Image from "next/image"
 interface LogoProps {
   linkToHome?: boolean
   className?: string
+  size?: "sm" | "md" | "lg" | "xl"
 }
 
-export function Logo({ linkToHome = true, className = "" }: LogoProps) {
+export function Logo({ linkToHome = true, className = "", size = "md" }: LogoProps) {
+  // Define different logo sizes
+  const sizeConfig = {
+    sm: { width: 100, height: 32, class: "h-8" },
+    md: { width: 140, height: 45, class: "h-11" },
+    lg: { width: 180, height: 58, class: "h-14" },
+    xl: { width: 220, height: 70, class: "h-16" },
+    xxl: { width: 260, height: 84, class: "h-20" },
+  }
+
+  const config = sizeConfig[size]
+
   const logoElement = (
     <div className="flex items-center">
       <Image
-        src="/images/fixit-logo.png"
+        src={`/images/fixit-logo.png?height=${config.height}&width=${config.width}&text=LOGO`}
         alt="Fixit Logo"
-        width={0}
-        height={40}
-        className={`h-8 w-auto ${className}`}
+        width={config.width}
+        height={config.height}
+        className={`${config.class} w-auto ${className}`}
         priority
       />
     </div>

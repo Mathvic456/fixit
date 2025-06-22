@@ -63,7 +63,7 @@ export default function Component() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <Logo />
+          <Logo size="xl"/>
           <Link href="/">
             <Button
               variant="outline"
@@ -168,7 +168,7 @@ export default function Component() {
               </div>
             </StaggerItem>
 
-            <StaggerItem>
+            {/* <StaggerItem>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-xs text-blue-800 text-center">
                   <strong>Note:</strong> To activate this form, replace "YOUR_WAITLIST_FORM_ID" in the code with your
@@ -181,7 +181,7 @@ export default function Component() {
                   to get started.
                 </p>
               </div>
-            </StaggerItem>
+            </StaggerItem> */}
           </StaggerContainer>
         </main>
 
@@ -189,10 +189,10 @@ export default function Component() {
         <div className="px-4 sm:px-6 pb-8">
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             {[
-              { src: "/images/technician-1.jpg", alt: "Female technician with cleaning supplies" },
-              { src: "/images/technician-2.jpg", alt: "Male technician with solar panels" },
-              { src: "/images/technician-3.jpg", alt: "Female technician in kitchen" },
-              { src: "/images/technician-4.jpg", alt: "Male construction worker" },
+              { src: "/images/Six.png", alt: "Female technician with cleaning supplies" },
+              { src: "/images/Plumbing.png", alt: "Male technician with solar panels" },
+              { src: "/images/One.png", alt: "Female technician in kitchen" },
+              { src: "/images/Five.png", alt: "Male construction worker" },
             ].map((image, index) => (
               <StaggerItem key={index}>
                 <div className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
