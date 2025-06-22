@@ -63,7 +63,7 @@ export default function Component() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <Logo size="xl"/>
+          <Logo size="xxl"/>
           <Link href="/">
             <Button
               variant="outline"
