@@ -143,7 +143,7 @@ export default function HomePage() {
                 <div className="text-center mb-8 sm:mb-12">
                   <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">Frequently Asked Questions</h2>
                   <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto">
-                    Got questions? We've got answers. Here's everything you need to know before joining FixitAI.
+                    Got questions? We've got answers. Here's everything you need to know before joining Fixit.
                   </p>
                 </div>
               </StaggerItem>

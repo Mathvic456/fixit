@@ -102,7 +102,7 @@ export function BecomeTechnicianModal({ open, onOpenChange }: BecomeTechnicianMo
                     <div>
                       <h4 className="font-semibold text-slate-800">Earn More</h4>
                       <p className="text-sm text-gray-600">
-                        Set your own rates and keep 85% of what you earn. Average technicians earn $2,000-5,000/month.
+                        Set your own rates and keep 85% of whatever you earn.
                       </p>
                     </div>
                   </div>
