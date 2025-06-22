@@ -42,10 +42,21 @@ export function Footer() {
                 repair and maintenance needs.
               </p>
               <div className="flex space-x-4">
+                {/* <Link href="https://www.instagram.com/fixi.tng/"> */}
                 <Facebook className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+                {/* </Link> */}
+
+                <Link href="https://x.com/ng_fixit">
                 <Twitter className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+                </Link>
+                
+                <Link href="https://www.instagram.com/fixi.tng/">
                 <Instagram className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-                <Linkedin className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+                </Link>
+
+                <a href="mailto:fixitfrontdesk@gmail.com">
+                <Mail className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+                </a>
               </div>
             </div>
 
