@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Wrench } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Link from "next/link"
 import { Footer } from "@/components/footer"
@@ -9,6 +8,7 @@ import { PageTransition } from "@/components/page-transition"
 import { LearnMoreModal } from "@/components/learn-more-modal"
 import { ResponsiveImage } from "@/components/responsive-image"
 import { StaggerContainer, StaggerItem } from "@/components/loading-animations"
+import { Logo } from "@/components/logo"
 import { useState } from "react"
 
 const faqData = [
@@ -47,12 +47,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 bg-orange-500 rounded">
-              <Wrench className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900">fixit</span>
-          </div>
+          <Logo />
           <div className="flex gap-2">
             <Link href="/request-service">
               <Button className="bg-orange-500 text-white hover:bg-orange-600 text-sm sm:text-base px-4 sm:px-6">

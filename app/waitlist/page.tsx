@@ -5,7 +5,6 @@ import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Wrench } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { CheckCircle } from "lucide-react"
 import Link from "next/link"
@@ -14,6 +13,7 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { PageTransition } from "@/components/page-transition"
 import { ResponsiveImage } from "@/components/responsive-image"
 import { StaggerContainer, StaggerItem, LoadingSpinner } from "@/components/loading-animations"
+import { Logo } from "@/components/logo"
 
 export default function Component() {
   const [email, setEmail] = useState("")
@@ -63,12 +63,7 @@ export default function Component() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 bg-orange-500 rounded">
-              <Wrench className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900">fixit</span>
-          </div>
+          <Logo />
           <Link href="/">
             <Button
               variant="outline"
@@ -173,7 +168,7 @@ export default function Component() {
               </div>
             </StaggerItem>
 
-            {/* <StaggerItem>
+            <StaggerItem>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-xs text-blue-800 text-center">
                   <strong>Note:</strong> To activate this form, replace "YOUR_WAITLIST_FORM_ID" in the code with your
@@ -186,7 +181,7 @@ export default function Component() {
                   to get started.
                 </p>
               </div>
-            </StaggerItem> */}
+            </StaggerItem>
           </StaggerContainer>
         </main>
 
@@ -194,10 +189,10 @@ export default function Component() {
         <div className="px-4 sm:px-6 pb-8">
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             {[
-              { src: "/images/Three.png", alt: "Female technician with cleaning supplies" },
-              { src: "/images/Six.png", alt: "Male technician with solar panels" },
-              { src: "/images/Plumbing.png", alt: "Female technician in kitchen" },
-              { src: "/images/Four.png", alt: "Male construction worker" },
+              { src: "/images/technician-1.jpg", alt: "Female technician with cleaning supplies" },
+              { src: "/images/technician-2.jpg", alt: "Male technician with solar panels" },
+              { src: "/images/technician-3.jpg", alt: "Female technician in kitchen" },
+              { src: "/images/technician-4.jpg", alt: "Male construction worker" },
             ].map((image, index) => (
               <StaggerItem key={index}>
                 <div className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">

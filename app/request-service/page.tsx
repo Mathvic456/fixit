@@ -1,6 +1,5 @@
 "use client"
 
-import { Wrench } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Footer } from "@/components/footer"
@@ -8,6 +7,7 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { PageTransition } from "@/components/page-transition"
 import { ServiceRequestForm } from "@/components/service-request-form"
 import { StaggerContainer, StaggerItem } from "@/components/loading-animations"
+import { Logo } from "@/components/logo"
 
 export default function RequestServicePage() {
   return (
@@ -15,12 +15,7 @@ export default function RequestServicePage() {
       <div className="min-h-screen bg-gray-100">
         {/* Header */}
         <header className="flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 bg-orange-500 rounded">
-              <Wrench className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900">fixit</span>
-          </div>
+          <Logo />
           <Link href="/">
             <Button
               variant="outline"
