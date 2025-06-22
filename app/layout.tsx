@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Fixit - Africa\'s Smartest Technician-Matching Platform',
+  description: 'Africa\'s smartest technician-matching platform that connects you with verified, professional technicians for all your home and business repair needs.',
+  generator: '',
 }
 
 export default function RootLayout({
