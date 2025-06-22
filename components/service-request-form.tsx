@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,13 +19,16 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
     name: "",
     email: "",
     phone: "",
-    address: "",
+    state: "",
+    lga: "",
+    addressDetails: "",
     serviceType: "",
     description: "",
     preferredDate: "",
     preferredTime: "",
     images: [] as string[],
   })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -42,6 +43,24 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
     "Painting",
     "Cleaning Services",
     "General Handyman",
+  ]
+
+  const states = [
+    { name: "Lagos", lgAs: [
+      "Agege", "Ajeromi-Ifelodun", "Alimosho", "Amuwo-Odofin", "Apapa", 
+      "Badagry", "Epe", "Eti-Osa", "Ibeju-Lekki", "Ifako-Ijaiye",
+      "Ikeja", "Ikorodu", "Kosofe", "Lagos Island", "Lagos Mainland",
+      "Mushin", "Ojo", "Oshodi-Isolo", "Shomolu", "Surulere"
+    ]},
+    { name: "Akwa Ibom", lgAs: [
+      "Abak", "Eastern Obolo", "Eket", "Esit Eket", "Essien Udim",
+      "Etim Ekpo", "Etinan", "Ibeno", "Ibesikpo Asutan", "Ibiono-Ibom",
+      "Ika", "Ikono", "Ikot Abasi", "Ikot Ekpene", "Ini",
+      "Itu", "Mbo", "Mkpat-Enin", "Nsit-Atai", "Nsit-Ibom",
+      "Nsit-Ubium", "Obot Akara", "Okobo", "Onna", "Oron",
+      "Oruk Anam", "Udung-Uko", "Ukanafun", "Uruan", "Urue-Offong/Oruko",
+      "Uyo"
+    ]}
   ]
 
   const handleInputChange = (field: string, value: string) => {
@@ -61,30 +80,24 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
     setSubmitError(null)
 
     try {
-      // Prepare form data for Formspree
       const formspreeData = new FormData()
-
-      // Add all form fields
       formspreeData.append("name", formData.name)
       formspreeData.append("email", formData.email)
       formspreeData.append("phone", formData.phone)
-      formspreeData.append("address", formData.address)
+      formspreeData.append("state", formData.state)
+      formspreeData.append("lga", formData.lga)
+      formspreeData.append("addressDetails", formData.addressDetails)
       formspreeData.append("serviceType", formData.serviceType)
       formspreeData.append("description", formData.description)
       formspreeData.append("preferredDate", formData.preferredDate)
       formspreeData.append("preferredTime", formData.preferredTime)
       formspreeData.append("images", formData.images.join(", "))
-
-      // Add a subject line for better email organization
       formspreeData.append("_subject", `New Service Request: ${formData.serviceType} - ${formData.name}`)
 
-      // Submit to Formspree
       const response = await fetch("https://formspree.io/f/xjkredrz", {
         method: "POST",
         body: formspreeData,
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
       })
 
       if (response.ok) {
@@ -114,8 +127,7 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         </p>
         <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
           <p className="text-sm text-orange-800">
-            <strong>What's next?</strong> You'll receive a confirmation email with your request details and estimated
-            arrival time.
+            <strong>What's next?</strong> You'll receive a confirmation email with your request details.
           </p>
         </div>
         <Button
@@ -125,7 +137,9 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
               name: "",
               email: "",
               phone: "",
-              address: "",
+              state: "",
+              lga: "",
+              addressDetails: "",
               serviceType: "",
               description: "",
               preferredDate: "",
@@ -154,7 +168,6 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         </div>
       )}
 
-      {/* Personal Information */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
@@ -206,22 +219,66 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         </div>
       </div>
 
-      {/* Address */}
+      {/* Location Fields */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">State *</label>
+          <Select 
+            value={formData.state} 
+            onValueChange={(value) => {
+              handleInputChange("state", value)
+              handleInputChange("lga", "") // Reset LGA when state changes
+            }}
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select your state" />
+            </SelectTrigger>
+            <SelectContent>
+              {states.map((state) => (
+                <SelectItem key={state.name} value={state.name}>
+                  {state.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Local Government *</label>
+          <Select 
+            value={formData.lga} 
+            onValueChange={(value) => handleInputChange("lga", value)}
+            disabled={!formData.state}
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder={formData.state ? "Select LGA" : "Select state first"} />
+            </SelectTrigger>
+            <SelectContent>
+              {formData.state && states.find(s => s.name === formData.state)?.lgAs.map((lga) => (
+                <SelectItem key={lga} value={lga}>
+                  {lga}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           <MapPin className="w-4 h-4 inline mr-1" />
-          Service Address *
+          Detailed Address *
         </label>
-        <Input
-          type="text"
-          value={formData.address}
-          onChange={(e) => handleInputChange("address", e.target.value)}
-          placeholder="Enter the address where service is needed"
+        <Textarea
+          value={formData.addressDetails}
+          onChange={(e) => handleInputChange("addressDetails", e.target.value)}
+          placeholder="House number, street name, landmarks, etc."
+          rows={3}
           required
         />
       </div>
 
-      {/* Scheduling */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -255,26 +312,23 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
         </div>
       </div>
 
-      {/* Description */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Problem Description *</label>
         <Textarea
           value={formData.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
-          placeholder="Describe the problem in detail. What needs to be fixed or installed?"
+          placeholder="Describe the problem in detail"
           rows={4}
           required
         />
       </div>
 
-      {/* Image Upload */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Photos (Optional)</label>
-        <p className="text-xs text-gray-500 mb-3">Upload photos of the problem to help technicians prepare better</p>
+        <p className="text-xs text-gray-500 mb-3">Upload photos to help technicians understand the issue</p>
         <FileUpload onUpload={handleImageUpload} />
       </div>
 
-      {/* Submit Button */}
       <Button
         type="submit"
         className="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 text-lg disabled:opacity-50"
@@ -289,19 +343,6 @@ export function ServiceRequestForm({ onSubmit, className = "" }: ServiceRequestF
           "Submit Service Request"
         )}
       </Button>
-{/* 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-xs text-blue-800 text-center">
-          <strong>Note:</strong> To activate this form, replace "YOUR_FORM_ID" in the code with your actual Formspree
-          form ID.
-          <br />
-          Create a free account at{" "}
-          <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" className="underline">
-            formspree.io
-          </a>{" "}
-          to get started.
-        </p>
-      </div> */}
 
       <p className="text-xs text-gray-500 text-center">
         By submitting this form, you agree to our Terms of Service and Privacy Policy

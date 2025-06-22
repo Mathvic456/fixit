@@ -146,7 +146,7 @@ export function Footer() {
               <div className="space-y-3 text-sm text-gray-300">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 flex-shrink-0" />
-                  <span className="break-all">support@fixit.com</span>
+                  <span className="break-all">fixitfrontdesk@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 flex-shrink-0" />
