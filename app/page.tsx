@@ -112,21 +112,21 @@ export default function HomePage() {
         <div className="px-4 sm:px-6 pb-12 sm:pb-16">
           <StaggerContainer className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto">
             {[
-              { alt: "Female cleaning technician with supplies", priority: true },
-              { alt: "Solar panel installation technician", priority: true },
-              { alt: "Kitchen appliance repair technician", priority: false },
-              { alt: "Construction worker with safety gear", priority: false },
-              { alt: "Electrical technician working", priority: false },
-              { alt: "Plumbing technician with tools", priority: false },
+              { src: "/images/One.png", alt: "Female cleaning technician with supplies", priority: true },
+              { src: "/images/Two.png", alt: "Solar panel installation technician", priority: true },
+              { src: "/images/Three.png", alt: "Kitchen appliance repair technician", priority: false },
+              { src: "/images/Plumbing.png", alt: "Construction worker with safety gear", priority: false },
+              { src: "/images/Five.png", alt: "Electrical technician working", priority: false },
+              { src: "/images/Six.png", alt: "Plumbing technician with tools", priority: false },
             ].map((image, index) => (
               <StaggerItem key={index}>
-                <div className="aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                   <ResponsiveImage
-                    src={`/placeholder.svg?height=300&width=300`}
+                    src={image.src}
                     alt={image.alt}
                     width={300}
                     height={300}
-                    className="hover:scale-105 transition-transform duration-300"
+                    className="hover:scale-105 transition-transform duration-300 absolute inset-0"
                     priority={image.priority}
                   />
                 </div>

@@ -194,19 +194,19 @@ export default function Component() {
         <div className="px-4 sm:px-6 pb-8">
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
             {[
-              "Female technician with cleaning supplies",
-              "Male technician with solar panels",
-              "Female technician in kitchen",
-              "Male construction worker",
-            ].map((alt, index) => (
+              { src: "/images/Three.png", alt: "Female technician with cleaning supplies" },
+              { src: "/images/Six.png", alt: "Male technician with solar panels" },
+              { src: "/images/Plumbing.png", alt: "Female technician in kitchen" },
+              { src: "/images/Four.png", alt: "Male construction worker" },
+            ].map((image, index) => (
               <StaggerItem key={index}>
-                <div className="aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
+                <div className="relative aspect-square rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                   <ResponsiveImage
-                    src={`/placeholder.svg?height=250&width=250`}
-                    alt={alt}
+                    src={image.src}
+                    alt={image.alt}
                     width={250}
                     height={250}
-                    className="hover:scale-105 transition-transform duration-300"
+                    className="hover:scale-105 transition-transform duration-300 absolute inset-0"
                   />
                 </div>
               </StaggerItem>
