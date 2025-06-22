@@ -38,11 +38,47 @@ export function BecomeTechnicianModal({ open, onOpenChange }: BecomeTechnicianMo
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      const response = await fetch("https://formspree.io/f/meoklygp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          location: formData.location,
+          experience: formData.experience,
+          specialties: formData.specialties,
+          description: formData.description,
+          formType: "Technician Application",
+          submittedAt: new Date().toISOString(),
+        }),
+      })
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+      if (response.ok) {
+        setIsSubmitted(true)
+        // Reset form data
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          location: "",
+          experience: "",
+          specialties: "",
+          description: "",
+        })
+      } else {
+        throw new Error("Failed to submit application")
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      // You could add error state handling here
+      alert("There was an error submitting your application. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
@@ -102,7 +138,7 @@ export function BecomeTechnicianModal({ open, onOpenChange }: BecomeTechnicianMo
                     <div>
                       <h4 className="font-semibold text-slate-800">Earn More</h4>
                       <p className="text-sm text-gray-600">
-                        Set your own rates and keep 85% of whatever you earn.
+                        Set your own rates and keep 85% of what you earn. Average technicians earn $2,000-5,000/month.
                       </p>
                     </div>
                   </div>
